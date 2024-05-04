@@ -1,6 +1,10 @@
 # <center> NYC TLC Trip Record Data Project </center>
 ---
 
+Data Source: [Website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+
+---
+
 ### Overview:
 - [x] Selecting a dataset of interest (see Datasets)
 - [ ] Creating a pipeline for processing this dataset and putting it to a data lake
@@ -22,30 +26,36 @@ __Cloud Platform:__
 - [ ] GCP
 - [ ] Azure
 - [ ] ...
+
 __Containerization:__
 - [x] Docker
 - [ ] ...
+
 __Infrastructure-as-Code (IaC):__
 - [x] Terraform
 - [ ] Pulumi
 - [ ] CloudFormation
 - [ ] ...
+
 __Workflow Orchestration:__
 - [x] Mage
 - [ ] Airflow
 - [ ] Prefect
 - [ ] Luigi
 - [ ] ...
+
 __Data Warehouse:__
 - [ ] BigQuery
 - [ ] Snowflake
 - [x] Redshift
 - [ ] ...
+
 __Batch Processing:__
 - [ ] Spark
 - [ ] Flink
 - [ ] AWS Batch
 - [ ] ...
+
 __Stream Processing:__
 - [ ] Kafka
 - [ ] Pulsar
