@@ -1,0 +1,152 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-west-1:709623555156:task-definition/mage-elt-task:8",
+    "containerDefinitions": [
+        {
+            "name": "mage-elt-development-container",
+            "image": "709623555156.dkr.ecr.us-west-1.amazonaws.com/mage-elt",
+            "cpu": 512,
+            "memory": 1024,
+            "portMappings": [
+                {
+                    "containerPort": 6789,
+                    "hostPort": 6789,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "AWS_REGION_NAME",
+                    "value": "us-west-1"
+                },
+                {
+                    "name": "ENV",
+                    "value": "production"
+                },
+                {
+                    "name": "AWS_ACCESS_KEY_ID",
+                    "value": "AWS_ACCESS_KEY_ID"
+                },
+                {
+                    "name": "MAGE_EC2_SUBNET_ID",
+                    "value": "subnet-0713ff16f5b95446f"
+                },
+                {
+                    "name": "AWS_SECRET_ACCESS_KEY",
+                    "value": "AWS_SECRET_ACCESS_KEY"
+                },
+                {
+                    "name": "MAGE_DATABASE_CONNECTION_URL",
+                    "value": "postgresql+psycopg2://postgres:postgres@mage-elt-development-db.cdqs98ubvxes.us-west-1.rds.amazonaws.com:5432/mage"
+                }
+            ],
+            "mountPoints": [
+                {
+                    "sourceVolume": "mage-elt-fs",
+                    "containerPath": "/home/src",
+                    "readOnly": false
+                }
+            ],
+            "volumesFrom": [],
+            "ulimits": [
+                {
+                    "name": "nofile",
+                    "softLimit": 16384,
+                    "hardLimit": 32768
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "mage-elt-development-logs",
+                    "awslogs-region": "us-west-1",
+                    "awslogs-stream-prefix": "mage-elt-development"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:6789/api/status || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 10
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "mage-elt-task",
+    "taskRoleArn": "arn:aws:iam::709623555156:role/mage-elt-execution-task-role",
+    "executionRoleArn": "arn:aws:iam::709623555156:role/mage-elt-execution-task-role",
+    "networkMode": "awsvpc",
+    "revision": 8,
+    "volumes": [
+        {
+            "name": "mage-elt-fs",
+            "efsVolumeConfiguration": {
+                "fileSystemId": "fs-076f5013738140cdc",
+                "rootDirectory": "/",
+                "transitEncryption": "ENABLED"
+            }
+        }
+    ],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "ecs.capability.efsAuth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.efs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.container-health-check"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "512",
+    "memory": "1024",
+    "registeredAt": "2024-05-06T18:25:38.616Z",
+    "registeredBy": "arn:aws:iam::709623555156:user/iac-svc-user",
+    "tags": [
+        {
+            "key": "Environment",
+            "value": "development"
+        },
+        {
+            "key": "Name",
+            "value": "mage-elt-ecs-td"
+        }
+    ]
+}
