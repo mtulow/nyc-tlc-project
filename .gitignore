@@ -164,7 +164,7 @@ cython_debug/
 *.terraform*
 *.tfstate
 *.tfstate.*
+*.tfvars
 
 # Mage AI
-demo_project/
 mage_data/
