@@ -1,22 +1,22 @@
 # db.tf | Database Configuration
 
+# Subnet Group
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  name        = "${var.app_name}-${var.app_environment}-rds-subnet-group"
+  name        = "${var.app_name}-rds-subnet-group"
   description = "${var.app_name} RDS subnet group"
   subnet_ids  = aws_subnet.public.*.id
   tags = {
     Environment = var.app_environment
   }
 }
-
-
+# Security Group
 resource "aws_security_group" "rds_sg" {
-  name = "${var.app_name}-${var.app_environment}-rds-sg"
+  name = "${var.app_name}-${var.app_env}-rds-sg"
   description = "${var.app_name} RDS Security Group"
-  vpc_id = aws_vpc.aws-vpc.id
+  vpc_id = aws_vpc.mage_vpc.id
 
   tags = {
-    Name = "${var.app_name}-${var.app_environment}-rds-sg"
+    Name = "${var.app_name}-${var.app_env}-rds-sg"
     Environment =  var.app_environment
   }
 
@@ -44,9 +44,9 @@ resource "aws_security_group" "rds_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
+# RDS Instance
 resource "aws_db_instance" "rds" {
-  identifier             = "${var.app_name}-${var.app_environment}-db"
+  identifier             = "${var.app_name}-db"
   allocated_storage      = 20
   engine                 = "postgres"
   engine_version         = "14"

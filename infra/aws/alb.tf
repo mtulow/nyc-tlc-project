@@ -1,24 +1,29 @@
 # alb.tf | Load Balancer Configuration
 
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
+# ========= #
+# Resources #
+# ========= #
+
+# Load Balancer
 resource "aws_alb" "application_load_balancer" {
-  name               = "${var.app_name}-${var.app_environment}-alb"
+  name               = "${var.app_name}-${var.app_env}-alb"
   internal           = false
   load_balancer_type = "application"
   subnets            = aws_subnet.public.*.id
   security_groups    = [aws_security_group.load_balancer_security_group.id]
 
   tags = {
-    Name        = "${var.app_name}-alb"
+    Name        = "${var.app_name}-${var.app_env}-alb"
     Environment = var.app_environment
   }
 }
-
-data "http" "myip" {
-  url = "http://ipv4.icanhazip.com"
-}
-
+# Security Group
 resource "aws_security_group" "load_balancer_security_group" {
-  vpc_id = aws_vpc.aws-vpc.id
+  vpc_id = aws_vpc.mage_vpc.id
 
   ingress {
     from_port   = 443
@@ -44,17 +49,17 @@ resource "aws_security_group" "load_balancer_security_group" {
     ipv6_cidr_blocks = ["::/0"]
   }
   tags = {
-    Name        = "${var.app_name}-sg"
+    Name        = "${var.app_name}-${var.app_env}-sg"
     Environment = var.app_environment
   }
 }
-
+# Target Group
 resource "aws_lb_target_group" "target_group" {
-  name        = "${var.app_name}-${var.app_environment}-tg"
+  name        = "${var.app_name}-${var.app_env}-tg"
   port        = 6789
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = aws_vpc.aws-vpc.id
+  vpc_id      = aws_vpc.mage_vpc.id
 
   health_check {
     healthy_threshold   = "3"
@@ -71,7 +76,7 @@ resource "aws_lb_target_group" "target_group" {
     Environment = var.app_environment
   }
 }
-
+# Listener
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_alb.application_load_balancer.id
   port              = "80"

@@ -1,5 +1,6 @@
 # efs.tf | Elastic File System Configuration
 
+# File System
 resource "aws_efs_file_system" "file_system" {
   encrypted         = true
   performance_mode  = "generalPurpose"
@@ -10,17 +11,16 @@ resource "aws_efs_file_system" "file_system" {
     Environment = var.app_environment
   }
 }
-
+# Mount Target
 resource "aws_efs_mount_target" "mount_target" {
   count = length(aws_subnet.public)
   file_system_id = aws_efs_file_system.file_system.id
   subnet_id      = aws_subnet.public[count.index].id
   security_groups = [ aws_security_group.mount_target_security_group.id ]
 }
-
-
+# Security Group
 resource "aws_security_group" "mount_target_security_group" {
-  vpc_id = aws_vpc.aws-vpc.id
+  vpc_id = aws_vpc.mage_vpc.id
 
   ingress {
     from_port        = 2049

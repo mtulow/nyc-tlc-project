@@ -5,7 +5,7 @@ data "archive_file" "zip_the_python_code" {
   source_dir  = "${path.module}/python/"
   output_path = "${path.module}/python/event_handler.zip"
 }
-
+# Lambda Function
 resource "aws_lambda_function" "terraform_lambda_func" {
   filename        = "${path.module}/python/event_handler.zip"
   function_name   = "${var.app_name}-events"
