@@ -1,7 +1,7 @@
 # <center> NYC TLC Trip Record Data Project </center>
 ---
 
-Data Source: [Website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+Data Source: [Website](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/projects/datasets.md)
 
 ---
 
