@@ -6,7 +6,7 @@ Data Source: [Website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.p
 ---
 
 ### Overview:
-- [x] Selecting a dataset of interest (see Datasets)
+- [x] Selecting a dataset of interest (see [Datasets](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/projects#datasets))
 - [ ] Creating a pipeline for processing this dataset and putting it to a data lake
 - [ ] Creating a pipeline for moving the data from the lake to a data warehouse
 - [ ] Transforming the data in the data warehouse: prepare it for the dashboard
